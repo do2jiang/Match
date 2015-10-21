@@ -1,12 +1,46 @@
 #Match 般配
 
+## 账号相关
+
+### 注册
+
+    发送网站POST  xxx/account/register/
+    {
+        "username":
+        "password":
+        "gender": 0 / 1   0:man 1:female
+    }
+    返回
+    {
+
+        "result": 1
+    }
+
+### 登入
+
+    发送网站POST  xxx/account/login/
+    {
+        "username":
+        "password":
+    }
+    返回
+    {
+        "user_info": {
+            "user": 12,  (id)
+            "nickname": 
+            "gender": 
+            "avatar":
+            "token": 
+        },
+        "result": 1
+    }
+
 ## 随机匹配
 
 ### 随机获取5男5女列表 
 
-发送网站get  xxx/couple/random/list
-
-返回
+    发送网站get  xxx/couple/random/list
+    返回
     {
         "boys": [
             {
@@ -41,11 +75,11 @@
 
 ### 提交般配名单
 
-发送网站POST xxx/couple/random/match/
+    发送网站POST xxx/couple/random/match/
     {
     "matchs":[{"boy":1,"girl":5},{"boy":"4","girl":"6"}] 男孩id，女孩id， json数组
     }
-返回
+    返回
     {
         "vote": [
             11,
