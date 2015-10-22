@@ -101,11 +101,25 @@
     {
         "lovers": [
             {
+                "id": 
                 "girl_avatar": 
                 "boy_avatar": 
             }
 
             xxx  一次返回十个
         ],
+        "result": 1
+    }
+
+### 给恩爱狗评价
+
+    发送网站POST xxx/couple/love_show/judge/
+    {
+        'love_show_id':
+        'judge': 0 / 1 (1点赞，0反对)
+    }
+    返回
+    {
+
         "result": 1
     }
