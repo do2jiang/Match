@@ -6,7 +6,7 @@ from account.fields import ThumbnailImageField
 
 class UserInfo(models.Model):
     user = models.OneToOneField(User, related_name='userinfo')
-    nickname = models.CharField(max_length=20, blank=True, null=True)
+    nickname = models.CharField(max_length=20, blank=True,)
     avatar = ThumbnailImageField(upload_to='account/avatar')
     GENDER = ( (u'1', u'female'), (u'0', u'man'), )
     gender = models.CharField(max_length = 1, choices = GENDER, blank = True, null = True)

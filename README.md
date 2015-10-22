@@ -8,8 +8,10 @@
     {
         "username":
         "password":
-        "gender": 0 / 1   0:man 1:female
+        "gender": "0" / "1"   "0":man "1":female
     }
+    file "avatar"
+
     返回
     {
 
@@ -84,6 +86,26 @@
         "vote": [
             11,
             1
+        ],
+        "result": 1
+    }
+
+
+## 情侣秀
+
+### 获取恩爱狗
+
+    发送网站GET xxx/couple/love_show/get/
+
+    返回
+    {
+        "lovers": [
+            {
+                "girl_avatar": 
+                "boy_avatar": 
+            }
+
+            xxx  一次返回十个
         ],
         "result": 1
     }

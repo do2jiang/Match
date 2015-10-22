@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import auth
 
@@ -23,12 +22,14 @@ def register(request):
 
     new_user = form.save()
     avatar = request.FILES.get('avatar', None)
-    if avatar:
-        User.objects.filter(pk=new_user.id).update(avatar=avatar)
+    # if not avatar:
+    #     return Response({
+    #         'result': 0,
+    #         'cause': u'必须上传头像'
+    #         })
 
-    UserInfo.objects.create(user=new_user, gender=gender)
+    UserInfo.objects.create(user=new_user, gender=gender, avatar=avatar)
     Token.objects.create(user=new_user)
-
 
     return Response({
         'result': 1,
