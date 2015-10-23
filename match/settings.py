@@ -107,3 +107,6 @@ REST_FRAMEWORK = {
     ),    
 }
 
+app_key = 'd145f7d61bb27ce3440ee2b2'
+master_secret = '53916080e101d9260613fa66'
+

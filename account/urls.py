@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, include, url
 
-from account.views import register, login
+from account.views import user, friend
+
 
 urlpatterns = patterns('',
     # Examples:
@@ -13,6 +14,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^register', register),
-    url(r'^login', login),
+    url(r'^register', user.register),
+    url(r'^login', user.login),
+    url(r'^match_users/', friend.match_user_list),
 )

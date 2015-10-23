@@ -37,6 +37,25 @@
         "result": 1
     }
 
+### 匹配异性列表(一次返5个)
+
+    发送网站GET  xxx/account/match_users/
+
+    返回
+    {
+        "result": 1,
+        "match_users": [
+            {
+                "user": 14,
+                "nickname": "",
+                "gender": "1",
+                "avatar": "/media/account/avatar/173571467.jpg"
+            },
+
+            xxx, 
+        ]
+    }
+
 ## 随机匹配
 
 ### 随机获取5男5女列表 
