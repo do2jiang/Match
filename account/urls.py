@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^register', user.register),
     url(r'^login', user.login),
     url(r'^match_users/', friend.match_user_list),
+    url(r'^get_user_avatar/', user.get_user_avatar),
 )

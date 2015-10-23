@@ -52,12 +52,16 @@ def register(request):
     new_user = form.save()
 
 
-    UserInfo.objects.create(user=new_user, gender=gender, avatar=avatar)
-    Token.objects.create(user=new_user)
+    user_info = UserInfo.objects.create(user=new_user, gender=gender, avatar=avatar)
+    token = Token.objects.create(user=new_user)
+
+    serializer = UserInfoSerializer(user_info)
+    response = serializer.data             
+    response['token'] = token.key
 
     return Response({
         'result': 1,
-        'token': new_user.token.key
+        'user_info': response
         })
 
 
@@ -98,4 +102,28 @@ def login(request):
             "result": 0,
             "cause":cause,
             #"Token"
+            })
+
+@api_view(['GET'])
+def get_user_avatar(request):
+    receive = request.GET
+    check_username = receive.get('check_username', None)
+    
+    if check_username:
+        try:
+            user = User.objects.get(username=check_username)
+        except User.DoesNotExist:
+            return Response({
+                'result': 0,
+                'cause': u'用户不存在'
+                })
+
+        return Response({
+            'result': 1,
+            'avatar': user.userinfo.avatar.url
+            })
+    else:
+        return Response({
+            'result': 0,
+            'cause': u'未指定用户'
             })

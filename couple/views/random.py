@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
-from django.db.models import F
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 

@@ -46,14 +46,23 @@
         "result": 1,
         "match_users": [
             {
-                "user": 14,
-                "nickname": "",
-                "gender": "1",
+                "username": 
+                "nickname": ""
                 "avatar": "/media/account/avatar/173571467.jpg"
             },
 
             xxx, 
         ]
+    }
+
+### 获取用户头像
+
+    发送网站GET account/get_user_avatar/?check_username=zjindiss2
+    
+    返回
+    {
+        "result": 1,
+        "avatar": "/media/account/avatar/2.jpg"
     }
 
 ## 随机匹配
