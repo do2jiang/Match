@@ -14,6 +14,11 @@ class UserInfo(models.Model):
     def __unicode__(self):
         return self.user.username
 
+class PhoneFriend(models.Model):
+    user = models.ForeignKey(User, related_name='user')
+    friend = models.ForeignKey(User, related_name='phone_friend')
+
+
 import binascii
 import os
 

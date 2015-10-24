@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^settings', user.settings),
     url(r'^match_users/', friend.match_user_list),
     url(r'^check_user/', user.check_user),
+    url(r'^get_phone_friends/', friend.get_phone_friends),
 )

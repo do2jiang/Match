@@ -23,38 +23,33 @@ def random_list(request):
 @api_view(['POST'])
 def random_match(request):
     receive = request.data
-    print receive
-    matchs = receive.get('matchs', None)
-    if matchs:
-        vote_count = []
-        for match in matchs:
-            boy_id  = match.get('boy', None)
-            girl_id = match.get('girl', None)
-            try: 
-                boy = UserInfo.objects.get(user_id=boy_id, gender=0)
-                girl = UserInfo.objects.get(user_id=girl_id, gender=1)
-            except UserInfo.DoesNotExist:
-                return Response({
-                    'result': 0,
-                    'cause': u'某用户不存在或性别错误',
-                    }) 
-            
-            try:
-                random_match = RandomMath.objects.filter(boy_id=boy_id, girl_id=girl_id).all()[0:1]
-                # random_match.vote = F('vote') + 1
-                # random_match.save()
-                random_match.vote += 1
-                random_match.save()
-            except RandomMath.DoesNotExist:
-                random_match = RandomMath(boy_id=boy_id, girl_id=girl_id)
-                random_match.save()
-        
-            vote_count.append(random_match.vote)
-            
+    boy_id  = receive.get('boy', None)
+    girl_id = receive.get('girl', None)
+    try: 
+        UserInfo.objects.get(user_id=boy_id, gender='0')
+        UserInfo.objects.get(user_id=girl_id, gender='1')
+    except UserInfo.DoesNotExist:
         return Response({
-            'result': 1,
-            'vote': vote_count,
-            })
+            'result': 0,
+            'cause': u'某用户不存在或性别错误',
+            }) 
+    
+    random_match = RandomMath.objects.filter(boy_id=boy_id, girl_id=girl_id).all()[0:1]
+
+    if not random_match:
+        random_match = RandomMath(boy_id=boy_id, girl_id=girl_id)
+        random_match.save()
+    else:
+        random_match = random_match[0]
+        vote = random_match.vote
+        vote += 1
+        random_match.vote = vote
+        random_match.save()
+
+    return Response({
+        'result': 1,
+        'vote': random_match.vote,
+        })
 
 
 

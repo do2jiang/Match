@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
-
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from account.serializers import UserInfoSerializer, LoveShowSerializer
-from account.models import UserInfo
+from account.serializers import LoveShowSerializer
 
 from couple.models import LoveShow
 
@@ -71,8 +68,8 @@ def lover_rank_list(request):
     my_show_serializer = dict([])
     my_show_serializer['avatar'] = user.userinfo.avatar.url
     my_show_serializer['lover'] = my_show.lover.url
-    my_show_serializer['favour'] = my_show.favour
-    my_show_serializer['rank'] = rank
+    my_show_serializer['favour'] = my_favour
+    my_show_serializer['rank'] = rank + 1
 
 
     love_show_list = LoveShow.objects.order_by('-favour').all()[0:10]

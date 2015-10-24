@@ -6,10 +6,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-from account.forms import RegisterForm
 from account.models import Token, UserInfo
 from account.serializers import UserInfoSerializer
-from account.forms import SettingPasswordForm
 
 from couple.models import LoveShow
 
@@ -19,19 +17,37 @@ from match.settings import app_key, master_secret
 import base64
 import requests
 import json
+import re
 
 @api_view(['POST'])
 def register(request):
     recevie = request.data
+    username = recevie.get('username', '')
+    password = recevie.get('password', '')
     gender = recevie.get('gender', '0')
-    form = RegisterForm(recevie)
-    if not form.is_valid():
+
+    if not password:
         return Response({
-            'result': 0,
-            'cause': form.errors,
+            'result':0,
+            'cause':u'请输入密码'
             })
 
-    print request.FILES
+    try:
+        User.objects.get(username=username)
+        cause = u"用户名已存在"
+        return Response({
+            'result':0,
+            'cause':cause
+            })
+    except User.DoesNotExist:
+        USER_RE = re.compile(u'^[a-zA-Z0-9_-]{3,20}$')
+        if not USER_RE.match(username):
+            cause = u"用户名不合法，长度3到10,大小写字母、数字、-、下划线组成"
+            return Response({
+                'result':0,
+                'cause':cause
+                })
+
     avatar = request.FILES.get('avatar', None)
     if not avatar:
         return Response({
@@ -41,7 +57,7 @@ def register(request):
 
     ##### "注册到极光即时聊天" ######   
     JIM = 'https://api.im.jpush.cn/v1/users/'
-    data = [{"username": form.cleaned_data['username'], "password": form.cleaned_data['password']},]
+    data = [{"username": username, "password": username},]
     data = json.dumps(data)
     base64_auth_string = base64.b64encode(app_key + ':' + master_secret)
     headers = dict()
@@ -54,10 +70,8 @@ def register(request):
             "cause": u"注册失败",
             })
     ############
-    new_user = form.save()
-
-
-    user_info = UserInfo.objects.create(user=new_user, nickname=form.cleaned_data['username'], gender=gender, avatar=avatar)
+    new_user = User.objects.create_user(username=username, password=password)
+    user_info = UserInfo.objects.create(user=new_user, nickname=new_user.id, gender=gender, avatar=avatar)
     token = Token.objects.create(user=new_user)
 
     serializer = UserInfoSerializer(user_info)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from account.models import UserInfo, Token
+from account.models import UserInfo, Token, PhoneFriend
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 # from rest_framework.authtoken.models import Token
@@ -23,7 +23,11 @@ class TokenInline(admin.StackedInline):
 class UserAdmin(UserAdmin):
     inlines = (UserInfoInline, TokenInline )
 
+class PhoneFriendAdmin(admin.ModelAdmin):
+	list_display = ('user', 'friend')
+
 admin.site.register(UserInfo)
 admin.site.register(Token, TokenAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(PhoneFriend, PhoneFriendAdmin)

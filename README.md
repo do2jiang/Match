@@ -97,6 +97,17 @@ APPKEY：vmuWqxU4IwlrKuai0ouWmG1KNu7DiN
         "avatar": "/media/account/avatar/2.jpg"
     }
 
+### 获取通讯录好友
+
+    发送网站POST account/get_phone_friends/
+    {
+        "phone_friends": ["188292xxx", "xxxx"]
+    }
+    返回
+    {
+        "result": 1,
+    }
+        
 ## 随机匹配
 
 ### 随机获取5男5女列表 
@@ -139,14 +150,12 @@ APPKEY：vmuWqxU4IwlrKuai0ouWmG1KNu7DiN
 
     发送网站POST xxx/couple/random/match/
     {
-    "matchs":[{"boy":1,"girl":5},{"boy":"4","girl":"6"}] 男孩id，女孩id， json数组
+    "boy":1,"girl":男孩id，女孩id
     }
+    
     返回
     {
-        "vote": [
-            11,
-            1
-        ],
+        "vote": 
         "result": 1
     }
 

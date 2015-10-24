@@ -45,22 +45,4 @@ class RegisterForm(forms.ModelForm):
             user.save()
         return user
 
-class SettingPasswordForm(forms.Form):
-    password_old = forms.CharField(min_length=6, max_length=64,
-        error_messages=error_messages.get('password'))
-    password = forms.CharField(min_length=6, max_length=64,
-        error_messages=error_messages.get('password'))
-
-    def __init__(self, request):
-        self.user = request.user
-        super(SettingPasswordForm, self).__init__(request.POST)
-
-    def clean(self):
-        password_old = self.cleaned_data.get('password_old')
-        password = self.cleaned_data.get('password')
-
-        if not (password_old and self.user.check_password(password_old)):
-            raise forms.ValidationError(u'当前输入旧密码有误')
-            
-        return self.cleaned_data
 

@@ -5,7 +5,30 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from couple.models import RandomMath
+
 from account.serializers import UserInfoSerializer
+from account.models import PhoneFriend
+
+@api_view(['POST'])
+def get_phone_friends(request):
+    user = request.user
+    phone_friends = request.data.get('phone_friends', None)
+    if phone_friends:
+        for phone_friend in phone_friends:
+            try:
+                friend = User.objects.get(username=phone_friend)
+                PhoneFriend.objects.get_or_create(user=user, friend=friend)
+            except User.DoesNotExist:
+                pass
+        return Response({
+            'result': 1
+            })
+    else:
+        return Response({
+            'result': 0,
+            'cause': u'查询通讯录好友失败'
+            })
+
 
 def random_match_user(user, gender):
     'random create RandomMath by gender'
