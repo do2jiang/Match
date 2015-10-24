@@ -71,6 +71,12 @@ DATABASES = {
     }
 }
 
+CACHES = { # memcached缓存设置
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -115,4 +121,7 @@ REST_FRAMEWORK = {
 
 app_key = 'd145f7d61bb27ce3440ee2b2'
 master_secret = '53916080e101d9260613fa66'
+
+BROKER_URL = 'amqp://'
+CELERY_RESULT_BACKEND = 'amqp://'
 

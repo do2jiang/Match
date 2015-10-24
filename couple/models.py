@@ -15,4 +15,5 @@ class LoveShow(models.Model):
 	lover = ThumbnailImageField(upload_to='media/love_show')
 	favour = models.IntegerField(default=0)
 	oppose = models.IntegerField(default=0)
+	hot = models.FloatField(default=0.0)
 	

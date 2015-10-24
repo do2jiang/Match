@@ -18,11 +18,11 @@ def lovers_get(request):
         item = dict([])
         item['id'] = love_show.id
         if love_show.user.userinfo.gender == '0':
-            item['boy_avatar'] = love_show.user.userinfo.avatar.mid_url
-            item['girl_avatar'] = love_show.lover.mid_url
+            item['boy_avatar'] = love_show.user.userinfo.avatar.url
+            item['girl_avatar'] = love_show.lover.url
         else:
-            item['girl_avatar'] = love_show.user.userinfo.avatar.mid_url
-            item['boy_avatar'] = love_show.lover.mid_url
+            item['girl_avatar'] = love_show.user.userinfo.avatar.url
+            item['boy_avatar'] = love_show.lover.url
         lovers.append(item)
 
     return Response({
@@ -84,5 +84,20 @@ def lover_rank_list(request):
     return Response({
         'result': 1,
         'my_lover': my_show_serializer,
+        'rank_list': love_show_list_serializer.data,
+        })
+
+
+
+@api_view(['GET'])
+def love_show_hot_list(request):
+    love_show_list = LoveShow.objects.order_by('-hot').all()[0:10]
+    love_show_list_serializer = LoveShowSerializer(love_show_list, many=True)
+    for i, item in enumerate(love_show_list_serializer.data):
+        love_show_list_one = love_show_list[i]
+        item['avatar'] = love_show_list_one.user.userinfo.avatar.url
+
+    return Response({
+        'result': 1,
         'rank_list': love_show_list_serializer.data,
         })

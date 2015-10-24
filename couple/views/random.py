@@ -23,6 +23,7 @@ def random_list(request):
 @api_view(['POST'])
 def random_match(request):
     receive = request.data
+    print receive
     matchs = receive.get('matchs', None)
     if matchs:
         vote_count = []
@@ -39,7 +40,7 @@ def random_match(request):
                     }) 
             
             try:
-                random_match = RandomMath.objects.get(boy_id=boy_id, girl_id=girl_id)
+                random_match = RandomMath.objects.filter(boy_id=boy_id, girl_id=girl_id).all()[0:1]
                 # random_match.vote = F('vote') + 1
                 # random_match.save()
                 random_match.vote += 1

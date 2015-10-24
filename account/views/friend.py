@@ -12,17 +12,13 @@ def random_match_user(user, gender):
     random_users = User.objects.filter(userinfo__gender=gender).order_by('?')[0:10]
     if gender == '0':
         for random_user in random_users:
-            try:
+            if not RandomMath.objects.filter(boy=random_user,girl=user).exists():
                 RandomMath.objects.create(boy=random_user,girl=user)
-            except RandomMath.IntegrityError:
-                pass
         return RandomMath.objects.filter(girl=user).order_by('-vote')[0:10]
     else:
         for random_user in random_users:
-            try:
-                RandomMath.objects.create(boy=user,girl=random_user)
-            except RandomMath.IntegrityError:
-                pass
+            if not RandomMath.objects.filter(girl=random_user, boy=user).exists():
+                RandomMath.objects.create(girl=random_user, boy=user)
         return RandomMath.objects.filter(boy=user).order_by('-vote')[0:10]
         
 
