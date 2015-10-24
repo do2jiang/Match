@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^register', user.register),
     url(r'^login', user.login),
+    url(r'^settings', user.settings),
     url(r'^match_users/', friend.match_user_list),
-    url(r'^get_user_avatar/', user.get_user_avatar),
+    url(r'^check_user/', user.check_user),
 )

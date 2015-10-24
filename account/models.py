@@ -11,6 +11,9 @@ class UserInfo(models.Model):
     GENDER = ( (u'1', u'female'), (u'0', u'man'), )
     gender = models.CharField(max_length = 1, choices = GENDER, blank = True, null = True)
 
+    def __unicode__(self):
+        return self.user.username
+
 import binascii
 import os
 

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from account.serializers import UserInfoSerializer
+from account.serializers import UserInfoSerializer, LoveShowSerializer
 from account.models import UserInfo
 
 from couple.models import LoveShow
@@ -60,4 +60,29 @@ def lovers_favour_or_oppose(request):
 
     return Response({
         'result': 1,
+        })
+
+@api_view(['GET'])
+def lover_rank_list(request):
+    user = request.user
+    my_show = LoveShow.objects.get(user=user)
+    my_favour = my_show.favour
+    rank = LoveShow.objects.filter(favour__lt=my_favour).count()
+    my_show_serializer = dict([])
+    my_show_serializer['avatar'] = user.userinfo.avatar.url
+    my_show_serializer['lover'] = my_show.lover.url
+    my_show_serializer['favour'] = my_show.favour
+    my_show_serializer['rank'] = rank
+
+
+    love_show_list = LoveShow.objects.order_by('-favour').all()[0:10]
+    love_show_list_serializer = LoveShowSerializer(love_show_list, many=True)
+    for i, item in enumerate(love_show_list_serializer.data):
+        love_show_list_one = love_show_list[i]
+        item['avatar'] = love_show_list_one.user.userinfo.avatar.url
+
+    return Response({
+        'result': 1,
+        'my_lover': my_show_serializer,
+        'rank_list': love_show_list_serializer.data,
         })

@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^random/match/', random.random_match),
     url(r'^love_show/get/', love_show.lovers_get),
     url(r'^love_show/judge/', love_show.lovers_favour_or_oppose),
+    url(r'^love_show/rank/', love_show.lover_rank_list),
 )

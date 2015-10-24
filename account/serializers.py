@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from account.models import UserInfo
+from couple.models import LoveShow
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     """
@@ -25,4 +26,9 @@ class UserInfoSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = UserInfo
         fields = ('user', 'nickname', 'gender', 'avatar', )
+
+class LoveShowSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = LoveShow
+        fields = ('lover', 'favour')
         

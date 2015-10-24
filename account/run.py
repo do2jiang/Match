@@ -3,7 +3,7 @@ from PIL import Image
 import os
 
 avatar_dir = os.walk('/home/z-kidy/pictures')
-pro_dir = '/home/z-kidy/Match/media/account/avatar/'
+pro_dir = '/home/z-kidy/workspace/Match/media/account/avatar/'
 
 for i in avatar_dir:
 	a = i
@@ -23,4 +23,23 @@ for image in images:
 	user.userinfo.save()
 
 
- 
+@api_view(['POST'])
+def settings(request):
+    user = request.user
+    receive = request.data
+    form = SettingPasswordForm(receive)
+    change_nickname = receive.get('new_nickname', None)
+    change_gender = receive.get('gender', None)
+    if not form.invalid():
+    	return Response({
+    		'result': 0,
+    		'cause': form.errors
+    		})
+
+    if change_nickname:
+        UserInfo.objects.filter(user=user).update(nickname=change_nickname)
+    if change_gender and change_gender in ['0', '1']:
+    	UserInfo.objects.filter(user=user).update(gender=change_gender)
+    return Response({
+        'result': 1,
+        })

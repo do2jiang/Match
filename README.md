@@ -32,10 +32,38 @@
             "nickname": 
             "gender": 
             "avatar":
-            "token": 
+            "token":
+            "lover": avatar of my lover 
         },
         "result": 1
     }
+
+### 设置
+
+    发送网站POST xxx/account/settings/
+    {
+        "nickname":
+        "password_old":
+        "password":
+        "gender":
+
+    }
+    file "avatar" 
+    
+    返回
+    {
+        "result": 1,
+        "match_users": [
+            {
+                "username": 
+                "nickname": ""
+                "avatar": "/media/account/avatar/173571467.jpg"
+            },
+
+            xxx, 
+        ]
+    }
+
 
 ### 匹配异性列表(一次返5个)
 
@@ -57,7 +85,7 @@
 
 ### 获取用户头像
 
-    发送网站GET account/get_user_avatar/?check_username=zjindiss2
+    发送网站GET account/check_user/?check_username=zjindiss2
     
     返回
     {

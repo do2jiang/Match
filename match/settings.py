@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for match project.
 
@@ -74,7 +75,12 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-cn'
+
+LANGUAGES = (
+    ('zh-cn', u'简体中文'), # instead of 'zh-CN'
+    ('zh', u'繁體中文'), # instead of 'zh-TW'
+)
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -82,7 +88,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False  # ??
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -90,7 +96,7 @@ USE_TZ = False  # ??
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/'),
 )
 
 MEDIA_URL = '/media/'
