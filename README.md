@@ -107,7 +107,20 @@ APPKEY：vmuWqxU4IwlrKuai0ouWmG1KNu7DiN
     {
         "result": 1,
     }
-        
+
+### 链接好友
+    
+    发送网站POST account/link_user/
+    {
+        "link_username":"xxx"
+    }
+    返回
+    {
+        "result": 1,
+    }
+
+
+
 ## 随机匹配
 
 ### 随机获取5男5女列表 

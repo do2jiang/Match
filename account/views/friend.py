@@ -11,6 +11,7 @@ from account.models import PhoneFriend
 
 @api_view(['POST'])
 def get_phone_friends(request):
+    print request.data
     user = request.user
     phone_friends = request.data.get('phone_friends', None)
     if phone_friends:
@@ -83,4 +84,25 @@ def match_user_list(request):
         'match_users': info_serializer.data,
         })
 
+@api_view(['POST'])
+def link_user(request):
+    user = request.user
+    if user.userinfo.gender == '1':
+        lover_gender = '0'
+    else:
+        lover_gender = '1'
+
+    link_username = request.data.get('link_username', '')
+    try:
+        lover = User.objects.get(username=link_username, userinfo__gender=lover_gender)
+    except User.DoesNotExist:
+        return Response({
+            'result': 0,
+            'cause': u'用户不存在或性别不符合'
+            })
+
+    # send_message to user
+    return Response({
+        'result': 1,
+        })
 
