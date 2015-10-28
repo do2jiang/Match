@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
+#encoding=utf-8
 from django.contrib.auth.models import User
 from django.contrib import auth
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from rest_framework import status
 
 from account.models import Token, UserInfo
 from account.serializers import UserInfoSerializer
@@ -35,14 +35,16 @@ def register(request):
     try:
         User.objects.get(username=username)
         cause = u"用户名已存在"
+        print '1'
         return Response({
             'result':0,
-            'cause':cause
+            'cause':u"用户名已存在"
             })
     except User.DoesNotExist:
         USER_RE = re.compile(u'^[a-zA-Z0-9_-]{3,20}$')
         if not USER_RE.match(username):
-            cause = u"用户名不合法，长度3到10,大小写字母、数字、-、下划线组成"
+            cause = u"用户名不合法，长度3到20,大小写字母、数字、-、下划线组成"
+            print '2'
             return Response({
                 'result':0,
                 'cause':cause
@@ -50,6 +52,7 @@ def register(request):
 
     avatar = request.FILES.get('avatar', None)
     if not avatar:
+        print '3'
         return Response({
             'result': 0,
             'cause': u'必须上传头像'
@@ -65,6 +68,7 @@ def register(request):
     headers["Content-type"] = "application/json;charset:utf-8"
     response = requests.post(JIM, data=data, headers=headers, verify=False)
     if  response.status_code != 201:
+        print '4'
         return Response({
             "result": 0,
             "cause": u"注册失败",
@@ -81,7 +85,7 @@ def register(request):
     return Response({
         'result': 1,
         'user_info': response
-        })
+        }, )
 
 
 @api_view(['POST'])
@@ -126,7 +130,7 @@ def login(request):
             "result": 0,
             "cause":cause,
             #"Token"
-            })
+            }, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
 
 @api_view(['GET'])
 def check_user(request):
@@ -186,5 +190,16 @@ def settings(request):
         'result': 1,
         })
 
+# @api_view(['POST'])
+# def upload_avatar(request):
+#     user = request.user
+#     avatar = request.FILES.get('avatar', None)
+#     if not avatar:
+#         return Response({
+#             'result': 0,
+#             'cause': u'没有上传图片'
+#             })
 
-
+#     if UserInfo(user=user).avatar_count < 9:
+#     UploadAvatar.create(user=user, avatar=avatar)
+        

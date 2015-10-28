@@ -11,11 +11,14 @@ from account.models import PhoneFriend
 
 @api_view(['POST'])
 def get_phone_friends(request):
-    print request.data
+    print request.data  # for test
     user = request.user
     phone_friends = request.data.get('phone_friends', None)
     if phone_friends:
         for phone_friend in phone_friends:
+            if len(phone_friend) > 11:
+                phone_friend = phone_friend[3:]
+
             try:
                 friend = User.objects.get(username=phone_friend)
                 PhoneFriend.objects.get_or_create(user=user, friend=friend)

@@ -24,7 +24,7 @@ SECRET_KEY = ')&1qi!ck9o1^@pu8kb_=@#-*ny$+5($h8jj=l5vadz+w%w-k%1'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
+DEFAULT_CHARSET = 'utf-8'
 ALLOWED_HOSTS = []
 
 
@@ -62,7 +62,7 @@ WSGI_APPLICATION = 'match.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'LoversMatch',
+        'NAME': 'LoversMatchFinal',
         'USER': 'kidy',
         'PASSWORD': 'jindi135',
         'HOST': '127.0.0.1',

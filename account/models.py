@@ -10,7 +10,8 @@ class UserInfo(models.Model):
     avatar = ThumbnailImageField(upload_to='account/avatar')
     GENDER = ( (u'1', u'female'), (u'0', u'man'), )
     gender = models.CharField(max_length = 1, choices = GENDER, blank = True, null = True)
-
+#    avatar_count = models.IntegerField(default=1)
+    
     def __unicode__(self):
         return self.user.username
 
@@ -18,6 +19,9 @@ class PhoneFriend(models.Model):
     user = models.ForeignKey(User, related_name='user')
     friend = models.ForeignKey(User, related_name='phone_friend')
 
+# class UploadAvatar(models.Model):
+#     user = models.ForeignKey(User)
+#     avatar = ThumbnailImageField(upload_to='account/avatar')
 
 import binascii
 import os

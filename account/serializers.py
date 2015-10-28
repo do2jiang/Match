@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from account.models import UserInfo
-from couple.models import LoveShow
+from couple.models import LoveShow, RandomMath
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     """
@@ -31,4 +31,9 @@ class LoveShowSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = LoveShow
         fields = ('lover', 'favour')
+    
+# class  RandomMathSerializer(DynamicFieldsModelSerializer):
+#     class Meta:
+#         model = RandomMath
+#         files = ('vote',)
         
