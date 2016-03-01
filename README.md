@@ -1,8 +1,19 @@
 #Match 般配
 
+##获得魅族互联网编程大赛2等奖 [csdn报道](http://www.csdn.net/article/2015-11-04/2826122?reload=1)
+##技术栈
++ python/django
++ mysql
++ memcached缓存
++ celery消息队列
++ 极光推送
+
+
 APPID：7YeJC0HnWNMJNgQutHBj
+
 APPKEY：vmuWqxU4IwlrKuai0ouWmG1KNu7DiN
 
+##接口
 
 ## 账号相关
 
