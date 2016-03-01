@@ -43,3 +43,26 @@ def settings(request):
     return Response({
         'result': 1,
         })
+
+
+#Rewritten code from /r2/r2/lib/db/_sorts.pyx
+ 
+    user = request.user
+    receive = request.data    
+    change_nickname = receive.get('nickname', None)
+    change_gender = receive.get('gender', None)
+    old_password = receive.get('old_password', None)
+    new_password = receive.get('password', None)
+    change_avatar = request.FILES.get('avatar', None)
+
+    if change_avatar:
+        UserInfo.objects.filter(user=user).update(avatar=change_avatar)
+    
+    if old_password and new_password:
+        if user.check_password(old_password):
+            user.set_password(new_password)
+        else:
+            return Response({
+                'result': 0,
+                'cause': u'原密码错误'
+                })
